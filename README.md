@@ -13,7 +13,7 @@ An interactive, single-page mortgage calculator for planning a Jamaican home pur
 
 ## Run locally
 
-Open `mortgage-blueprint-calculator.html` in a modern browser.
+Open `index.html` in a modern browser.
 
 For local HTTP hosting, use any static file server. For example, with Python installed:
 
@@ -21,7 +21,7 @@ For local HTTP hosting, use any static file server. For example, with Python ins
 python3 -m http.server 8000
 ```
 
-Then visit <http://localhost:8000/mortgage-blueprint-calculator.html>.
+Then visit <http://localhost:8000/>.
 
 ## Calculation
 
@@ -39,9 +39,11 @@ At a 0% interest rate, the principal is divided evenly across the repayment mont
 
 ```text
 .
-├── mortgage-blueprint-calculator.html  # Application markup, styles, and logic
-├── README.md                            # Project documentation
-└── .gitignore                           # Files excluded from version control
+├── index.html    # Application markup
+├── styles.css    # Application styles
+├── script.js     # Calculator logic and interactions
+├── README.md     # Project documentation
+└── .gitignore    # Files excluded from version control
 ```
 
 ## Notes
