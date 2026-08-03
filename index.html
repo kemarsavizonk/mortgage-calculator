@@ -3,206 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mortgage Financing Blueprint</title>
+<meta name="description" content="Simple planning tools for mortgages and car loans in Jamaica.">
+<title>Financing Blueprint</title>
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<div class="wrap">
+<body class="home-page">
+<main class="home-shell">
+  <header class="home-hero">
+    <p class="eyebrow">Financing Blueprint</p>
+    <h1>Plan the purchase.<br><span>Understand the payment.</span></h1>
+    <p class="home-intro">Clear, practical calculators that help you explore financing options before speaking with a lender.</p>
+  </header>
 
-  <p class="eyebrow">Financing Blueprint</p>
-  <h1>Your Mortgage, Mapped</h1>
-  <p class="sub">Choose how many NHT applicants are contributing, then adjust the deposit, loan amounts, interest rates and repayment terms to see the complete monthly payment.</p>
+  <section class="tool-grid" aria-label="Available calculators">
+    <article class="tool-card tool-card-featured">
+      <div class="tool-card-top">
+        <span class="tool-number">01</span>
+        <span class="availability available">Available now</span>
+      </div>
+      <div>
+        <p class="tool-kicker">Home financing</p>
+        <h2>Mortgage calculator</h2>
+        <p>Combine a deposit, up to three NHT applicants, and a bank balance loan to estimate your total monthly payment.</p>
+      </div>
+      <a class="tool-button primary" href="mortgage-calculator.html">Open mortgage calculator <span aria-hidden="true">→</span></a>
+    </article>
 
-  <!-- HOUSE PRICE / DEPOSIT -->
-  <div class="panel">
-    <div class="top-bar-row">
-      <p class="eyebrow" style="margin:0;">Funding sources vs. house price</p>
-      <button class="reset-btn" id="resetBtn">↺ Reset to my scenario</button>
-    </div>
+    <article class="tool-card">
+      <div class="tool-card-top">
+        <span class="tool-number">02</span>
+        <span class="availability coming">Coming soon</span>
+      </div>
+      <div>
+        <p class="tool-kicker">Vehicle financing</p>
+        <h2>Car loan calculator</h2>
+        <p>Estimate a vehicle loan payment using your purchase price, deposit, interest rate, and repayment term.</p>
+      </div>
+      <a class="tool-button secondary" href="car-loan-calculator.html">View car loan calculator <span aria-hidden="true">→</span></a>
+    </article>
+  </section>
 
-    <div class="top-grid">
-      <div class="top-field">
-        <label for="housePriceN">House price</label>
-        <div class="money-input"><span>J$</span><input type="text" inputmode="decimal" data-currency id="housePriceN" value="42,000,000"></div>
-      </div>
-      <div class="top-field">
-        <label for="depositN">Deposit</label>
-        <div class="money-input"><span>J$</span><input type="text" inputmode="decimal" data-currency id="depositN" value="5,000,000"></div>
-      </div>
-      <div class="top-field">
-        <label for="nhtApplicantCount">Number of NHT applicants</label>
-        <select class="select-input" id="nhtApplicantCount">
-          <option value="0" selected>0 applicants</option>
-          <option value="1">1 applicant</option>
-          <option value="2">2 applicants</option>
-          <option value="3">3 applicants</option>
-        </select>
-      </div>
-      <div class="top-field">
-        <label for="nhtTotalN">Total NHT loan</label>
-        <div class="money-input" id="nhtTotalWrap"><span>J$</span><input type="text" inputmode="decimal" data-currency id="nhtTotalN" value="0" disabled></div>
-      </div>
-    </div>
-
-    <div class="blueprint-bar-shell">
-      <div class="bar-track" id="barTrack">
-        <div class="bar-seg" id="segDeposit" style="background:var(--deposit)"></div>
-        <div class="bar-seg" id="segNht1" style="background:var(--nht1)"></div>
-        <div class="bar-seg" id="segNht2" style="background:var(--nht2)"></div>
-        <div class="bar-seg" id="segNht3" style="background:var(--nht3)"></div>
-        <div class="bar-seg" id="segBank" style="background:var(--bank)"></div>
-        <div class="price-mark" id="priceMark"></div>
-      </div>
-    </div>
-
-    <div class="legend">
-      <div class="legend-item"><span class="swatch" style="background:var(--deposit)"></span>Deposit</div>
-      <div class="legend-item"><span class="swatch" style="background:var(--nht1)"></span>NHT · Applicant 1</div>
-      <div class="legend-item"><span class="swatch" style="background:var(--nht2)"></span>NHT · Applicant 2</div>
-      <div class="legend-item"><span class="swatch" style="background:var(--nht3)"></span>NHT · Applicant 3</div>
-      <div class="legend-item"><span class="swatch" style="background:var(--bank)"></span>Bank loan</div>
-    </div>
-
-    <div id="fundingStatus" class="funding-status ok">Fully funded</div>
-  </div>
-
-  <!-- LOAN CARDS -->
-  <div class="loans-grid">
-
-    <div class="loan-card nht-card is-hidden" data-nht-applicant="1" style="--accent: var(--nht1)">
-      <div class="loan-card-header"><span class="chip">NHT</span><h3>Applicant 1</h3></div>
-      <div class="field">
-        <div class="field-top"><label>Loan amount</label></div>
-        <div class="field-row">
-          <input type="range" id="nht1PrincipalR" min="0" max="30000000" step="50000" value="8500000">
-          <div class="num-box"><span>J$</span><input type="text" inputmode="decimal" data-currency id="nht1PrincipalN" value="0"></div>
-        </div>
-      </div>
-      <div class="field">
-        <div class="field-top"><label>Interest rate</label></div>
-        <div class="field-row">
-          <input type="range" id="nht1RateR" min="0" max="10" step="0.05" value="5">
-          <div class="num-box small"><input type="number" id="nht1RateN" value="5" step="0.05"><span>%</span></div>
-        </div>
-      </div>
-      <div class="field">
-        <div class="field-top"><label>Repayment term</label></div>
-        <div class="field-row">
-          <input type="range" id="nht1YearsR" min="1" max="40" step="1" value="30">
-          <div class="num-box small"><input type="number" id="nht1YearsN" value="30" step="1"><span>yrs</span></div>
-        </div>
-      </div>
-      <div class="loan-result">
-        <span class="result-label">Monthly payment to NHT (App. 1)</span>
-        <span class="result-value" id="nht1Monthly">—</span>
-      </div>
-    </div>
-
-    <div class="loan-card nht-card is-hidden" data-nht-applicant="2" style="--accent: var(--nht2)">
-      <div class="loan-card-header"><span class="chip">NHT</span><h3>Applicant 2</h3></div>
-      <div class="field">
-        <div class="field-top"><label>Loan amount</label></div>
-        <div class="field-row">
-          <input type="range" id="nht2PrincipalR" min="0" max="30000000" step="50000" value="8500000">
-          <div class="num-box"><span>J$</span><input type="text" inputmode="decimal" data-currency id="nht2PrincipalN" value="0"></div>
-        </div>
-      </div>
-      <div class="field">
-        <div class="field-top"><label>Interest rate</label></div>
-        <div class="field-row">
-          <input type="range" id="nht2RateR" min="0" max="10" step="0.05" value="5">
-          <div class="num-box small"><input type="number" id="nht2RateN" value="5" step="0.05"><span>%</span></div>
-        </div>
-      </div>
-      <div class="field">
-        <div class="field-top"><label>Repayment term</label></div>
-        <div class="field-row">
-          <input type="range" id="nht2YearsR" min="1" max="40" step="1" value="40">
-          <div class="num-box small"><input type="number" id="nht2YearsN" value="40" step="1"><span>yrs</span></div>
-        </div>
-      </div>
-      <div class="loan-result">
-        <span class="result-label">Monthly payment to NHT (App. 2)</span>
-        <span class="result-value" id="nht2Monthly">—</span>
-      </div>
-    </div>
-
-    <div class="loan-card nht-card is-hidden" data-nht-applicant="3" style="--accent: var(--nht3)">
-      <div class="loan-card-header"><span class="chip">NHT</span><h3>Applicant 3</h3></div>
-      <div class="field">
-        <div class="field-top"><label>Loan amount</label></div>
-        <div class="field-row">
-          <input type="range" id="nht3PrincipalR" min="0" max="30000000" step="50000" value="0">
-          <div class="num-box"><span>J$</span><input type="text" inputmode="decimal" data-currency id="nht3PrincipalN" value="0"></div>
-        </div>
-      </div>
-      <div class="field">
-        <div class="field-top"><label>Interest rate</label></div>
-        <div class="field-row">
-          <input type="range" id="nht3RateR" min="0" max="10" step="0.05" value="5">
-          <div class="num-box small"><input type="number" id="nht3RateN" value="5" step="0.05"><span>%</span></div>
-        </div>
-      </div>
-      <div class="field">
-        <div class="field-top"><label>Repayment term</label></div>
-        <div class="field-row">
-          <input type="range" id="nht3YearsR" min="1" max="40" step="1" value="30">
-          <div class="num-box small"><input type="number" id="nht3YearsN" value="30" step="1"><span>yrs</span></div>
-        </div>
-      </div>
-      <div class="loan-result">
-        <span class="result-label">Monthly payment to NHT (App. 3)</span>
-        <span class="result-value" id="nht3Monthly">—</span>
-      </div>
-    </div>
-
-    <div class="loan-card" style="--accent: var(--bank)">
-      <div class="loan-card-header"><span class="chip">Bank</span><h3>Balance loan</h3></div>
-      <div class="field">
-        <div class="field-top"><label>Loan amount (automatically calculated)</label></div>
-        <div class="field-row">
-          <div class="num-box calculated-value"><span>J$</span><input type="text" inputmode="numeric" data-currency id="bankPrincipalN" value="20,000,000" readonly aria-label="Calculated bank balance loan amount"></div>
-        </div>
-        <p class="field-note">House price minus deposit and all three NHT loans.</p>
-      </div>
-      <div class="field">
-        <div class="field-top"><label>Interest rate</label></div>
-        <div class="field-row">
-          <input type="range" id="bankRateR" min="0" max="20" step="0.05" value="8.25">
-          <div class="num-box small"><input type="number" id="bankRateN" value="8.25" step="0.05"><span>%</span></div>
-        </div>
-      </div>
-      <div class="field">
-        <div class="field-top"><label>Repayment term</label></div>
-        <div class="field-row">
-          <input type="range" id="bankYearsR" min="1" max="35" step="1" value="30">
-          <div class="num-box small"><input type="number" id="bankYearsN" value="30" step="1"><span>yrs</span></div>
-        </div>
-      </div>
-      <div class="loan-result">
-        <span class="result-label">Monthly payment to bank</span>
-        <span class="result-value" id="bankMonthly">—</span>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- TOTAL -->
-  <div class="panel total-panel">
-    <div class="total-left">
-      <p class="eyebrow">Combined monthly payment</p>
-      <div class="total-value"><span>J$</span> <span id="totalMonthly">0</span></div>
-    </div>
-    <div class="stack-bar">
-      <div class="stack-row" id="paymentStackRow"></div>
-      <div class="stack-labels" id="paymentStackLabels"></div>
-    </div>
-  </div>
-
-  <p class="footnote">Figures assume standard fixed-rate amortizing loans (equal monthly payments over the full term). This tool is for planning purposes only, based on the numbers you enter — it isn't financial advice, and your actual NHT and bank offers may include fees, insurance or terms not modeled here.</p>
-
-</div>
-
-<script src="script.js"></script>
+  <p class="home-note">Planning estimates only. Actual lender terms, fees, and insurance may vary.</p>
+</main>
 </body>
 </html>

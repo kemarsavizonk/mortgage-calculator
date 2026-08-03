@@ -16,7 +16,7 @@ An interactive, single-page mortgage calculator for planning a Jamaican home pur
 
 ## Run locally
 
-Open `index.html` in a modern browser.
+Open `index.html` in a modern browser, then choose a calculator.
 
 For local HTTP hosting, use any static file server. For example, with Python installed:
 
@@ -42,11 +42,13 @@ At a 0% interest rate, the principal is divided evenly across the repayment mont
 
 ```text
 .
-├── index.html    # Application markup
-├── styles.css    # Application styles
-├── script.js     # Calculator logic and interactions
-├── README.md     # Project documentation
-└── .gitignore    # Files excluded from version control
+├── index.html                # Calculator homepage
+├── mortgage-calculator.html  # Mortgage calculator
+├── car-loan-calculator.html  # Car loan coming-soon page
+├── styles.css                # Shared application styles
+├── script.js                 # Mortgage calculator interactions
+├── README.md                 # Project documentation
+└── .gitignore                # Files excluded from version control
 ```
 
 ## Notes
