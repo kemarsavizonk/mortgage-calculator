@@ -23,11 +23,11 @@
     <div class="top-grid">
       <div class="top-field">
         <label for="housePriceN">House price</label>
-        <div class="money-input"><span>J$</span><input type="number" id="housePriceN" value="42000000" step="100000"></div>
+        <div class="money-input"><span>J$</span><input type="text" inputmode="numeric" data-currency id="housePriceN" value="42,000,000"></div>
       </div>
       <div class="top-field">
         <label for="depositN">Deposit</label>
-        <div class="money-input"><span>J$</span><input type="number" id="depositN" value="5000000" step="50000"></div>
+        <div class="money-input"><span>J$</span><input type="text" inputmode="numeric" data-currency id="depositN" value="5,000,000"></div>
       </div>
     </div>
 
@@ -62,7 +62,7 @@
         <div class="field-top"><label>Loan amount</label></div>
         <div class="field-row">
           <input type="range" id="nht1PrincipalR" min="0" max="30000000" step="50000" value="8500000">
-          <div class="num-box"><span>J$</span><input type="number" id="nht1PrincipalN" value="8500000" step="50000"></div>
+          <div class="num-box"><span>J$</span><input type="text" inputmode="numeric" data-currency id="nht1PrincipalN" value="8,500,000"></div>
         </div>
       </div>
       <div class="field">
@@ -91,7 +91,7 @@
         <div class="field-top"><label>Loan amount</label></div>
         <div class="field-row">
           <input type="range" id="nht2PrincipalR" min="0" max="30000000" step="50000" value="8500000">
-          <div class="num-box"><span>J$</span><input type="number" id="nht2PrincipalN" value="8500000" step="50000"></div>
+          <div class="num-box"><span>J$</span><input type="text" inputmode="numeric" data-currency id="nht2PrincipalN" value="8,500,000"></div>
         </div>
       </div>
       <div class="field">
@@ -120,7 +120,7 @@
         <div class="field-top"><label>Loan amount</label></div>
         <div class="field-row">
           <input type="range" id="nht3PrincipalR" min="0" max="30000000" step="50000" value="0">
-          <div class="num-box"><span>J$</span><input type="number" id="nht3PrincipalN" value="0" step="50000"></div>
+          <div class="num-box"><span>J$</span><input type="text" inputmode="numeric" data-currency id="nht3PrincipalN" value="0"></div>
         </div>
       </div>
       <div class="field">
@@ -148,7 +148,7 @@
       <div class="field">
         <div class="field-top"><label>Loan amount (automatically calculated)</label></div>
         <div class="field-row">
-          <div class="num-box calculated-value"><span>J$</span><input type="number" id="bankPrincipalN" value="20000000" readonly aria-label="Calculated bank balance loan amount"></div>
+          <div class="num-box calculated-value"><span>J$</span><input type="text" inputmode="numeric" data-currency id="bankPrincipalN" value="20,000,000" readonly aria-label="Calculated bank balance loan amount"></div>
         </div>
         <p class="field-note">House price minus deposit and all three NHT loans.</p>
       </div>

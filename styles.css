@@ -214,13 +214,13 @@
     flex: 0 0 auto;
   }
   .num-box span{ color: var(--muted-2); font-family:'IBM Plex Mono', monospace; font-size: 10.5px; white-space:nowrap; }
-  .num-box input[type="number"]{
+  .num-box input{
     border:none; background:transparent; color: var(--text);
     font-family:'IBM Plex Mono', monospace; font-size: 12.5px; font-weight:600;
     width: 76px; outline:none; text-align:right;
     -moz-appearance: textfield;
   }
-  .num-box.small input[type="number"]{ width: 42px; }
+  .num-box.small input{ width: 42px; }
   .num-box.calculated-value{ width:100%; border-color:color-mix(in srgb, var(--bank) 45%, transparent); }
   .num-box.calculated-value input{ cursor:default; }
   .field-note{ margin:7px 0 0; color:var(--muted-2); font-size:11px; line-height:1.4; }
@@ -346,8 +346,8 @@
     input[type="range"]::-webkit-slider-thumb{ width:22px; height:22px; }
     input[type="range"]::-moz-range-thumb{ width:20px; height:20px; }
     .num-box{ padding:8px 9px; }
-    .num-box input[type="number"]{ font-size:16px; width:92px; }
-    .num-box.small input[type="number"]{ width:52px; }
+    .num-box input{ font-size:16px; width:92px; }
+    .num-box.small input{ width:52px; }
     .loan-result .result-value{ overflow-wrap:anywhere; }
 
     .total-panel{ gap:20px; }

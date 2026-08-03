@@ -5,6 +5,14 @@
     return n.toLocaleString('en-US', { minimumFractionDigits: decimals ?? 0, maximumFractionDigits: decimals ?? 0 });
   }
 
+  function numericValue(value){
+    return parseFloat(String(value).replace(/,/g, '')) || 0;
+  }
+
+  function formatCurrencyInput(input, value = numericValue(input.value)){
+    input.value = money(Math.max(0, value));
+  }
+
   function monthlyPayment(principal, annualRatePct, years){
     const n = Math.round(years * 12);
     if(n <= 0 || principal <= 0) return 0;
@@ -20,30 +28,39 @@
   function bindPair(rangeId, numberId, onChange){
     const r = $(rangeId);
     const n = $(numberId);
-    r.addEventListener('input', () => { n.value = r.value; onChange(); });
-    n.addEventListener('input', () => { r.value = n.value; onChange(); });
+    const isCurrency = n.hasAttribute('data-currency');
+    r.addEventListener('input', () => {
+      n.value = isCurrency ? money(numericValue(r.value)) : r.value;
+      onChange();
+    });
+    n.addEventListener('input', () => {
+      const value = numericValue(n.value);
+      if(isCurrency) formatCurrencyInput(n, value);
+      r.value = value;
+      onChange();
+    });
     onChange();
   }
 
   function recalc(){
-    const housePrice = Math.max(0, parseFloat($('housePriceN').value) || 0);
-    const deposit = Math.max(0, parseFloat($('depositN').value) || 0);
+    const housePrice = Math.max(0, numericValue($('housePriceN').value));
+    const deposit = Math.max(0, numericValue($('depositN').value));
 
-    const nht1P = Math.max(0, parseFloat($('nht1PrincipalN').value) || 0);
+    const nht1P = Math.max(0, numericValue($('nht1PrincipalN').value));
     const nht1R = parseFloat($('nht1RateN').value) || 0;
     const nht1Y = parseFloat($('nht1YearsN').value) || 0;
 
-    const nht2P = Math.max(0, parseFloat($('nht2PrincipalN').value) || 0);
+    const nht2P = Math.max(0, numericValue($('nht2PrincipalN').value));
     const nht2R = parseFloat($('nht2RateN').value) || 0;
     const nht2Y = parseFloat($('nht2YearsN').value) || 0;
 
-    const nht3P = Math.max(0, parseFloat($('nht3PrincipalN').value) || 0);
+    const nht3P = Math.max(0, numericValue($('nht3PrincipalN').value));
     const nht3R = parseFloat($('nht3RateN').value) || 0;
     const nht3Y = parseFloat($('nht3YearsN').value) || 0;
 
     // The bank finances only the remaining balance after the deposit and NHT loans.
     const bankP = Math.max(0, housePrice - deposit - nht1P - nht2P - nht3P);
-    $('bankPrincipalN').value = bankP;
+    formatCurrencyInput($('bankPrincipalN'), bankP);
     const bankR = parseFloat($('bankRateN').value) || 0;
     const bankY = parseFloat($('bankYearsN').value) || 0;
 
@@ -114,8 +131,12 @@
     bindPair('bank' + suffix + 'R', 'bank' + suffix + 'N', recalc);
   });
 
-  $('housePriceN').addEventListener('input', recalc);
-  $('depositN').addEventListener('input', recalc);
+  ['housePriceN', 'depositN'].forEach(id => {
+    $(id).addEventListener('input', () => {
+      formatCurrencyInput($(id));
+      recalc();
+    });
+  });
 
   const DEFAULTS = {
     housePriceN: 42000000, depositN: 5000000,
@@ -125,13 +146,14 @@
     bankRate: 8.25, bankYears: 30,
   };
   $('resetBtn').addEventListener('click', () => {
-    $('housePriceN').value = DEFAULTS.housePriceN;
-    $('depositN').value = DEFAULTS.depositN;
+    formatCurrencyInput($('housePriceN'), DEFAULTS.housePriceN);
+    formatCurrencyInput($('depositN'), DEFAULTS.depositN);
     NHT_GROUPS.forEach(p => {
       ['Principal', 'Rate', 'Years'].forEach(suffix => {
         const v = DEFAULTS[p + suffix];
         $(p + suffix + 'R').value = v;
-        $(p + suffix + 'N').value = v;
+        const input = $(p + suffix + 'N');
+        input.value = input.hasAttribute('data-currency') ? money(v) : v;
       });
     });
     ['Rate', 'Years'].forEach(suffix => {
