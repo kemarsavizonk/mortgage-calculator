@@ -8,9 +8,19 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<nav class="page-nav" aria-label="Page navigation">
-  <a class="back-link" href="index.html"><span aria-hidden="true">←</span> All calculators</a>
-</nav>
+  <header class="site-header">
+    <a class="home-button" href="index.html" aria-label="Go to homepage"><span aria-hidden="true">⌂</span> Home</a>
+    <div class="site-menu">
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="siteMenu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="menu-panel" id="siteMenu" aria-label="Site pages" hidden>
+        <a href="index.html">Home</a>
+        <a href="mortgage-calculator.html" aria-current="page">Mortgage calculator</a>
+        <a href="car-loan-calculator.html">Car loan calculator</a>
+      </nav>
+    </div>
+  </header>
 <div class="wrap">
 
   <p class="eyebrow">Financing Blueprint</p>
@@ -207,6 +217,7 @@
 
 </div>
 
+<script src="navigation.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

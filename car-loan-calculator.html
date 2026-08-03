@@ -8,8 +8,20 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body class="coming-soon-page">
+  <header class="site-header">
+    <a class="home-button" href="index.html" aria-label="Go to homepage"><span aria-hidden="true">⌂</span> Home</a>
+    <div class="site-menu">
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="siteMenu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="menu-panel" id="siteMenu" aria-label="Site pages" hidden>
+        <a href="index.html">Home</a>
+        <a href="mortgage-calculator.html">Mortgage calculator</a>
+        <a href="car-loan-calculator.html" aria-current="page">Car loan calculator</a>
+      </nav>
+    </div>
+  </header>
 <main class="coming-soon-shell">
-  <a class="back-link" href="index.html"><span aria-hidden="true">←</span> Back to calculators</a>
   <section class="coming-soon-card">
     <span class="coming-icon" aria-hidden="true">◇</span>
     <p class="eyebrow">Vehicle financing</p>
@@ -18,5 +30,6 @@
     <span class="coming-badge">Coming soon</span>
   </section>
 </main>
+<script src="navigation.js"></script>
 </body>
 </html>

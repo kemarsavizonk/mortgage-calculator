@@ -46,6 +46,7 @@ At a 0% interest rate, the principal is divided evenly across the repayment mont
 ├── mortgage-calculator.html  # Mortgage calculator
 ├── car-loan-calculator.html  # Car loan coming-soon page
 ├── styles.css                # Shared application styles
+├── navigation.js             # Shared page-navigation interactions
 ├── script.js                 # Mortgage calculator interactions
 ├── README.md                 # Project documentation
 └── .gitignore                # Files excluded from version control

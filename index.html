@@ -8,6 +8,19 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body class="home-page">
+  <header class="site-header">
+    <a class="home-button" href="index.html" aria-label="Go to homepage"><span aria-hidden="true">⌂</span> Home</a>
+    <div class="site-menu">
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="siteMenu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="menu-panel" id="siteMenu" aria-label="Site pages" hidden>
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="mortgage-calculator.html">Mortgage calculator</a>
+        <a href="car-loan-calculator.html">Car loan calculator</a>
+      </nav>
+    </div>
+  </header>
 <main class="home-shell">
   <header class="home-hero">
     <p class="eyebrow">Financing Blueprint</p>
@@ -45,5 +58,6 @@
 
   <p class="home-note">Planning estimates only. Actual lender terms, fees, and insurance may vary.</p>
 </main>
+<script src="navigation.js"></script>
 </body>
 </html>
