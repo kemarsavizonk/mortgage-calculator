@@ -29,19 +29,21 @@
     const housePrice = Math.max(0, parseFloat($('housePriceN').value) || 0);
     const deposit = Math.max(0, parseFloat($('depositN').value) || 0);
 
-    const nht1P = parseFloat($('nht1PrincipalN').value) || 0;
+    const nht1P = Math.max(0, parseFloat($('nht1PrincipalN').value) || 0);
     const nht1R = parseFloat($('nht1RateN').value) || 0;
     const nht1Y = parseFloat($('nht1YearsN').value) || 0;
 
-    const nht2P = parseFloat($('nht2PrincipalN').value) || 0;
+    const nht2P = Math.max(0, parseFloat($('nht2PrincipalN').value) || 0);
     const nht2R = parseFloat($('nht2RateN').value) || 0;
     const nht2Y = parseFloat($('nht2YearsN').value) || 0;
 
-    const nht3P = parseFloat($('nht3PrincipalN').value) || 0;
+    const nht3P = Math.max(0, parseFloat($('nht3PrincipalN').value) || 0);
     const nht3R = parseFloat($('nht3RateN').value) || 0;
     const nht3Y = parseFloat($('nht3YearsN').value) || 0;
 
-    const bankP = parseFloat($('bankPrincipalN').value) || 0;
+    // The bank finances only the remaining balance after the deposit and NHT loans.
+    const bankP = Math.max(0, housePrice - deposit - nht1P - nht2P - nht3P);
+    $('bankPrincipalN').value = bankP;
     const bankR = parseFloat($('bankRateN').value) || 0;
     const bankY = parseFloat($('bankYearsN').value) || 0;
 
@@ -102,11 +104,14 @@
   }
 
   // wire every slider to its matching manual-entry number box
-  const FIELD_GROUPS = ['nht1', 'nht2', 'nht3', 'bank'];
-  FIELD_GROUPS.forEach(p => {
+  const NHT_GROUPS = ['nht1', 'nht2', 'nht3'];
+  NHT_GROUPS.forEach(p => {
     bindPair(p + 'PrincipalR', p + 'PrincipalN', recalc);
     bindPair(p + 'RateR', p + 'RateN', recalc);
     bindPair(p + 'YearsR', p + 'YearsN', recalc);
+  });
+  ['Rate', 'Years'].forEach(suffix => {
+    bindPair('bank' + suffix + 'R', 'bank' + suffix + 'N', recalc);
   });
 
   $('housePriceN').addEventListener('input', recalc);
@@ -117,17 +122,22 @@
     nht1Principal: 8500000, nht1Rate: 5, nht1Years: 30,
     nht2Principal: 8500000, nht2Rate: 5, nht2Years: 40,
     nht3Principal: 0, nht3Rate: 5, nht3Years: 30,
-    bankPrincipal: 20000000, bankRate: 8.25, bankYears: 30,
+    bankRate: 8.25, bankYears: 30,
   };
   $('resetBtn').addEventListener('click', () => {
     $('housePriceN').value = DEFAULTS.housePriceN;
     $('depositN').value = DEFAULTS.depositN;
-    FIELD_GROUPS.forEach(p => {
+    NHT_GROUPS.forEach(p => {
       ['Principal', 'Rate', 'Years'].forEach(suffix => {
         const v = DEFAULTS[p + suffix];
         $(p + suffix + 'R').value = v;
         $(p + suffix + 'N').value = v;
       });
+    });
+    ['Rate', 'Years'].forEach(suffix => {
+      const v = DEFAULTS['bank' + suffix];
+      $('bank' + suffix + 'R').value = v;
+      $('bank' + suffix + 'N').value = v;
     });
     recalc();
   });

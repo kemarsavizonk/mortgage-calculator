@@ -145,11 +145,11 @@
     <div class="loan-card" style="--accent: var(--bank)">
       <div class="loan-card-header"><span class="chip">Bank</span><h3>Balance loan</h3></div>
       <div class="field">
-        <div class="field-top"><label>Loan amount</label></div>
+        <div class="field-top"><label>Loan amount (automatically calculated)</label></div>
         <div class="field-row">
-          <input type="range" id="bankPrincipalR" min="0" max="30000000" step="50000" value="20000000">
-          <div class="num-box"><span>J$</span><input type="number" id="bankPrincipalN" value="20000000" step="50000"></div>
+          <div class="num-box calculated-value"><span>J$</span><input type="number" id="bankPrincipalN" value="20000000" readonly aria-label="Calculated bank balance loan amount"></div>
         </div>
+        <p class="field-note">House price minus deposit and all three NHT loans.</p>
       </div>
       <div class="field">
         <div class="field-top"><label>Interest rate</label></div>

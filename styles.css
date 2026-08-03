@@ -219,6 +219,9 @@
     -moz-appearance: textfield;
   }
   .num-box.small input[type="number"]{ width: 42px; }
+  .num-box.calculated-value{ width:100%; border-color:color-mix(in srgb, var(--bank) 45%, transparent); }
+  .num-box.calculated-value input{ cursor:default; }
+  .field-note{ margin:7px 0 0; color:var(--muted-2); font-size:11px; line-height:1.4; }
   .num-box input[type="number"]::-webkit-outer-spin-button,
   .num-box input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
 

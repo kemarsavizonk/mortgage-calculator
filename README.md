@@ -6,6 +6,7 @@ An interactive, single-page mortgage calculator for planning a Jamaican home pur
 
 - Calculates monthly payments for each loan using fixed-rate amortization.
 - Supports separate principal, annual interest rate, and repayment term inputs.
+- Automatically calculates the bank balance loan from the house price, deposit, and three NHT loan amounts.
 - Shows whether the proposed funding meets, exceeds, or falls short of the house price.
 - Visualizes the funding mix and combined monthly-payment breakdown.
 - Includes a reset button for restoring the default scenario.
