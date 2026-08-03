@@ -11,7 +11,7 @@
 
   <p class="eyebrow">Financing Blueprint</p>
   <h1>Your Mortgage, Mapped</h1>
-  <p class="sub">Adjust the deposit, loan amounts, interest rates and repayment terms below to see exactly how much you'll owe each month — to NHT (both applicants) and to the bank — and what the combined payment looks like.</p>
+  <p class="sub">Choose how many NHT applicants are contributing, then adjust the deposit, loan amounts, interest rates and repayment terms to see the complete monthly payment.</p>
 
   <!-- HOUSE PRICE / DEPOSIT -->
   <div class="panel">
@@ -23,11 +23,24 @@
     <div class="top-grid">
       <div class="top-field">
         <label for="housePriceN">House price</label>
-        <div class="money-input"><span>J$</span><input type="text" inputmode="numeric" data-currency id="housePriceN" value="42,000,000"></div>
+        <div class="money-input"><span>J$</span><input type="text" inputmode="decimal" data-currency id="housePriceN" value="42,000,000"></div>
       </div>
       <div class="top-field">
         <label for="depositN">Deposit</label>
-        <div class="money-input"><span>J$</span><input type="text" inputmode="numeric" data-currency id="depositN" value="5,000,000"></div>
+        <div class="money-input"><span>J$</span><input type="text" inputmode="decimal" data-currency id="depositN" value="5,000,000"></div>
+      </div>
+      <div class="top-field">
+        <label for="nhtApplicantCount">Number of NHT applicants</label>
+        <select class="select-input" id="nhtApplicantCount">
+          <option value="0" selected>0 applicants</option>
+          <option value="1">1 applicant</option>
+          <option value="2">2 applicants</option>
+          <option value="3">3 applicants</option>
+        </select>
+      </div>
+      <div class="top-field">
+        <label for="nhtTotalN">Total NHT loan</label>
+        <div class="money-input" id="nhtTotalWrap"><span>J$</span><input type="text" inputmode="decimal" data-currency id="nhtTotalN" value="0" disabled></div>
       </div>
     </div>
 
@@ -56,13 +69,13 @@
   <!-- LOAN CARDS -->
   <div class="loans-grid">
 
-    <div class="loan-card" style="--accent: var(--nht1)">
+    <div class="loan-card nht-card is-hidden" data-nht-applicant="1" style="--accent: var(--nht1)">
       <div class="loan-card-header"><span class="chip">NHT</span><h3>Applicant 1</h3></div>
       <div class="field">
         <div class="field-top"><label>Loan amount</label></div>
         <div class="field-row">
           <input type="range" id="nht1PrincipalR" min="0" max="30000000" step="50000" value="8500000">
-          <div class="num-box"><span>J$</span><input type="text" inputmode="numeric" data-currency id="nht1PrincipalN" value="8,500,000"></div>
+          <div class="num-box"><span>J$</span><input type="text" inputmode="decimal" data-currency id="nht1PrincipalN" value="0"></div>
         </div>
       </div>
       <div class="field">
@@ -85,13 +98,13 @@
       </div>
     </div>
 
-    <div class="loan-card" style="--accent: var(--nht2)">
+    <div class="loan-card nht-card is-hidden" data-nht-applicant="2" style="--accent: var(--nht2)">
       <div class="loan-card-header"><span class="chip">NHT</span><h3>Applicant 2</h3></div>
       <div class="field">
         <div class="field-top"><label>Loan amount</label></div>
         <div class="field-row">
           <input type="range" id="nht2PrincipalR" min="0" max="30000000" step="50000" value="8500000">
-          <div class="num-box"><span>J$</span><input type="text" inputmode="numeric" data-currency id="nht2PrincipalN" value="8,500,000"></div>
+          <div class="num-box"><span>J$</span><input type="text" inputmode="decimal" data-currency id="nht2PrincipalN" value="0"></div>
         </div>
       </div>
       <div class="field">
@@ -114,13 +127,13 @@
       </div>
     </div>
 
-    <div class="loan-card" style="--accent: var(--nht3)">
+    <div class="loan-card nht-card is-hidden" data-nht-applicant="3" style="--accent: var(--nht3)">
       <div class="loan-card-header"><span class="chip">NHT</span><h3>Applicant 3</h3></div>
       <div class="field">
         <div class="field-top"><label>Loan amount</label></div>
         <div class="field-row">
           <input type="range" id="nht3PrincipalR" min="0" max="30000000" step="50000" value="0">
-          <div class="num-box"><span>J$</span><input type="text" inputmode="numeric" data-currency id="nht3PrincipalN" value="0"></div>
+          <div class="num-box"><span>J$</span><input type="text" inputmode="decimal" data-currency id="nht3PrincipalN" value="0"></div>
         </div>
       </div>
       <div class="field">

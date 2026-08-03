@@ -103,6 +103,22 @@
     font-family:'IBM Plex Mono', monospace; font-size: 16px; font-weight:600;
     width:100%; outline:none;
   }
+  .money-input:has(input:disabled){ opacity:0.55; }
+  .money-input input:disabled{ cursor:not-allowed; }
+  .select-input{
+    width:100%;
+    min-height:43px;
+    border:1px solid var(--panel-border);
+    border-radius:9px;
+    background:#102037;
+    color:var(--text);
+    padding:10px 12px;
+    font:600 16px 'IBM Plex Mono', monospace;
+    outline:none;
+  }
+  .select-input:focus, .money-input:focus-within, .num-box:focus-within{
+    border-color:rgba(111,160,224,0.7);
+  }
 
   /* ---- blueprint bar ---- */
   .blueprint-bar-shell{ margin-top: 22px; }
@@ -174,6 +190,7 @@
     border-radius: 12px;
     padding: 18px 18px 20px;
   }
+  .loan-card.is-hidden{ display:none; }
   .loan-card-header{ display:flex; align-items:baseline; gap:8px; margin-bottom: 16px; }
   .chip{
     font-family:'IBM Plex Mono', monospace;

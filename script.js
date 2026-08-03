@@ -9,8 +9,22 @@
     return parseFloat(String(value).replace(/,/g, '')) || 0;
   }
 
+  function currencyText(value){
+    const amount = Math.max(0, Number(value) || 0);
+    return money(amount, Number.isInteger(amount) ? 0 : 2);
+  }
+
   function formatCurrencyInput(input, value = numericValue(input.value)){
-    input.value = money(Math.max(0, value));
+    input.value = currencyText(value);
+  }
+
+  function formatCurrencyWhileTyping(input){
+    const cleaned = input.value.replace(/,/g, '').replace(/[^\d.]/g, '');
+    const hasDecimal = cleaned.includes('.');
+    const [wholePart = '0', ...decimalParts] = cleaned.split('.');
+    const whole = wholePart.replace(/^0+(?=\d)/, '') || '0';
+    const decimals = decimalParts.join('').slice(0, 2);
+    input.value = money(Number(whole)) + (hasDecimal ? '.' + decimals : '');
   }
 
   function monthlyPayment(principal, annualRatePct, years){
@@ -34,27 +48,66 @@
       onChange();
     });
     n.addEventListener('input', () => {
+      if(isCurrency) formatCurrencyWhileTyping(n);
       const value = numericValue(n.value);
-      if(isCurrency) formatCurrencyInput(n, value);
       r.value = value;
       onChange();
     });
+    if(isCurrency) n.addEventListener('blur', () => formatCurrencyInput(n));
     onChange();
+  }
+
+  function selectedApplicantCount(){
+    return parseInt($('nhtApplicantCount').value, 10) || 0;
+  }
+
+  function setApplicantVisibility(){
+    const count = selectedApplicantCount();
+    document.querySelectorAll('.nht-card').forEach(card => {
+      card.classList.toggle('is-hidden', Number(card.dataset.nhtApplicant) > count);
+    });
+    $('nhtTotalN').disabled = count === 0;
+  }
+
+  function setNhtTotalFromApplicants(){
+    const count = selectedApplicantCount();
+    let total = 0;
+    for(let i = 1; i <= count; i++) total += numericValue($(`nht${i}PrincipalN`).value);
+    formatCurrencyInput($('nhtTotalN'), total);
+  }
+
+  function distributeNhtTotal(preserveTotalText = false){
+    const count = selectedApplicantCount();
+    const total = count > 0 ? Math.max(0, numericValue($('nhtTotalN').value)) : 0;
+    const totalCents = Math.round(total * 100);
+    const baseShareCents = count > 0 ? Math.floor(totalCents / count) : 0;
+    const remainderCents = count > 0 ? totalCents % count : 0;
+
+    for(let i = 1; i <= 3; i++){
+      const amount = i <= count
+        ? (baseShareCents + (i <= remainderCents ? 1 : 0)) / 100
+        : 0;
+      $(`nht${i}PrincipalN`).value = currencyText(amount);
+      $(`nht${i}PrincipalR`).value = amount;
+    }
+    if(!preserveTotalText) formatCurrencyInput($('nhtTotalN'), total);
+    recalc();
   }
 
   function recalc(){
     const housePrice = Math.max(0, numericValue($('housePriceN').value));
     const deposit = Math.max(0, numericValue($('depositN').value));
 
-    const nht1P = Math.max(0, numericValue($('nht1PrincipalN').value));
+    const applicantCount = selectedApplicantCount();
+    const nht1P = applicantCount >= 1 ? Math.max(0, numericValue($('nht1PrincipalN').value)) : 0;
     const nht1R = parseFloat($('nht1RateN').value) || 0;
     const nht1Y = parseFloat($('nht1YearsN').value) || 0;
 
-    const nht2P = Math.max(0, numericValue($('nht2PrincipalN').value));
+    const nht2P = applicantCount >= 2 ? Math.max(0, numericValue($('nht2PrincipalN').value)) : 0;
     const nht2R = parseFloat($('nht2RateN').value) || 0;
     const nht2Y = parseFloat($('nht2YearsN').value) || 0;
 
-    const nht3P = Math.max(0, numericValue($('nht3PrincipalN').value));
+    const nht3P = applicantCount >= 3 ? Math.max(0, numericValue($('nht3PrincipalN').value)) : 0;
     const nht3R = parseFloat($('nht3RateN').value) || 0;
     const nht3Y = parseFloat($('nht3YearsN').value) || 0;
 
@@ -123,7 +176,10 @@
   // wire every slider to its matching manual-entry number box
   const NHT_GROUPS = ['nht1', 'nht2', 'nht3'];
   NHT_GROUPS.forEach(p => {
-    bindPair(p + 'PrincipalR', p + 'PrincipalN', recalc);
+    bindPair(p + 'PrincipalR', p + 'PrincipalN', () => {
+      setNhtTotalFromApplicants();
+      recalc();
+    });
     bindPair(p + 'RateR', p + 'RateN', recalc);
     bindPair(p + 'YearsR', p + 'YearsN', recalc);
   });
@@ -133,21 +189,34 @@
 
   ['housePriceN', 'depositN'].forEach(id => {
     $(id).addEventListener('input', () => {
-      formatCurrencyInput($(id));
+      formatCurrencyWhileTyping($(id));
       recalc();
     });
+    $(id).addEventListener('blur', () => formatCurrencyInput($(id)));
   });
+
+  $('nhtApplicantCount').addEventListener('change', () => {
+    setApplicantVisibility();
+    distributeNhtTotal();
+  });
+
+  $('nhtTotalN').addEventListener('input', () => {
+    formatCurrencyWhileTyping($('nhtTotalN'));
+    distributeNhtTotal(true);
+  });
+  $('nhtTotalN').addEventListener('blur', () => formatCurrencyInput($('nhtTotalN')));
 
   const DEFAULTS = {
     housePriceN: 42000000, depositN: 5000000,
-    nht1Principal: 8500000, nht1Rate: 5, nht1Years: 30,
-    nht2Principal: 8500000, nht2Rate: 5, nht2Years: 40,
+    nht1Principal: 0, nht1Rate: 5, nht1Years: 30,
+    nht2Principal: 0, nht2Rate: 5, nht2Years: 40,
     nht3Principal: 0, nht3Rate: 5, nht3Years: 30,
     bankRate: 8.25, bankYears: 30,
   };
   $('resetBtn').addEventListener('click', () => {
     formatCurrencyInput($('housePriceN'), DEFAULTS.housePriceN);
     formatCurrencyInput($('depositN'), DEFAULTS.depositN);
+    $('nhtApplicantCount').value = '0';
     NHT_GROUPS.forEach(p => {
       ['Principal', 'Rate', 'Years'].forEach(suffix => {
         const v = DEFAULTS[p + suffix];
@@ -161,7 +230,11 @@
       $('bank' + suffix + 'R').value = v;
       $('bank' + suffix + 'N').value = v;
     });
+    setApplicantVisibility();
+    formatCurrencyInput($('nhtTotalN'), 0);
     recalc();
   });
 
+  setApplicantVisibility();
+  setNhtTotalFromApplicants();
   recalc();
