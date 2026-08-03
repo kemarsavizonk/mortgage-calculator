@@ -13,7 +13,7 @@ An interactive, single-page mortgage calculator for planning a Jamaican home pur
 - Visualizes the funding mix and combined monthly-payment breakdown.
 - Includes a reset button for restoring the default scenario.
 - Runs entirely in the browser with no build step or application dependencies.
-- Includes a car-loan calculator with rolling vehicle-year options, year-based default rates, editable bank terms, and a live payment estimate.
+- Includes a car-loan calculator with rolling vehicle-year options, year-based default rates, switchable month/year terms, editable bank terms, and a live payment estimate.
 
 ## Run locally
 

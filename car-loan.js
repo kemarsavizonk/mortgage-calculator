@@ -42,9 +42,7 @@
     for(let year = currentYear + 1; year >= currentYear - 7; year--){
       const option = document.createElement('option');
       option.value = year;
-      option.textContent = year === currentYear + 1
-        ? `${year} (upcoming)`
-        : year === currentYear ? `${year} (current)` : String(year);
+      option.textContent = String(year);
       option.selected = year === currentYear;
       yearSelect.appendChild(option);
     }
@@ -66,7 +64,9 @@
     const price = Math.max(0, carNumericValue(carElement('carPrice').value));
     const downPayment = Math.max(0, carNumericValue(carElement('downPayment').value));
     const annualRate = Math.max(0, parseFloat(carElement('interestRate').value) || 0);
-    const months = Math.max(0, parseInt(carElement('loanMonths').value, 10) || 0);
+    const displayedTerm = Math.max(0, parseFloat(carElement('loanTerm').value) || 0);
+    const termUnit = document.querySelector('[data-term-unit].is-active').dataset.termUnit;
+    const months = Math.max(0, Math.round(termUnit === 'years' ? displayedTerm * 12 : displayedTerm));
     const principal = Math.max(0, price - downPayment);
     const monthlyPayment = monthlyCarPayment(principal, annualRate, months);
     const totalPayments = monthlyPayment * months;
@@ -89,14 +89,46 @@
       status.textContent = 'Enter a loan length of at least one month.';
     } else {
       status.className = 'car-status ready';
-      status.textContent = `${months} monthly payments at ${annualRate.toFixed(2)}% per year.`;
+      const duration = termUnit === 'years'
+        ? `${displayedTerm} ${displayedTerm === 1 ? 'year' : 'years'} (${months} monthly payments)`
+        : `${months} monthly payments`;
+      status.textContent = `${duration} at ${annualRate.toFixed(2)}% per year.`;
     }
+  }
+
+  function switchTermUnit(nextUnit){
+    const termInput = carElement('loanTerm');
+    const activeButton = document.querySelector('[data-term-unit].is-active');
+    const currentUnit = activeButton.dataset.termUnit;
+    if(nextUnit === currentUnit) return;
+
+    const currentValue = Math.max(0, parseFloat(termInput.value) || 0);
+    const months = currentUnit === 'years' ? currentValue * 12 : currentValue;
+    const nextValue = nextUnit === 'years'
+      ? Math.round((months / 12) * 100) / 100
+      : Math.round(months);
+
+    document.querySelectorAll('[data-term-unit]').forEach(button => {
+      const isActive = button.dataset.termUnit === nextUnit;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
+
+    termInput.value = nextValue;
+    termInput.min = nextUnit === 'years' ? '0.08' : '1';
+    termInput.max = nextUnit === 'years' ? '10' : '120';
+    termInput.step = nextUnit === 'years' ? '0.01' : '1';
+    carElement('loanTermSuffix').textContent = nextUnit;
+    recalculateCarLoan();
   }
 
   populateVehicleYears();
   carElement('vehicleYear').addEventListener('change', applyYearRate);
   carElement('interestRate').addEventListener('input', recalculateCarLoan);
-  carElement('loanMonths').addEventListener('input', recalculateCarLoan);
+  carElement('loanTerm').addEventListener('input', recalculateCarLoan);
+  document.querySelectorAll('[data-term-unit]').forEach(button => {
+    button.addEventListener('click', () => switchTermUnit(button.dataset.termUnit));
+  });
 
   document.querySelectorAll('[data-car-currency]').forEach(input => {
     input.addEventListener('input', () => {

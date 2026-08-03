@@ -57,8 +57,14 @@
         </div>
 
         <div class="top-field car-term-field">
-          <label for="loanMonths">Length of loan</label>
-          <div class="money-input suffix-input"><input type="number" inputmode="numeric" id="loanMonths" value="60" min="1" max="120" step="1"><span>months</span></div>
+          <div class="term-label-row">
+            <label for="loanTerm">Length of loan</label>
+            <div class="term-unit-toggle" role="group" aria-label="Loan length unit">
+              <button type="button" class="is-active" data-term-unit="months" aria-pressed="true">Months</button>
+              <button type="button" data-term-unit="years" aria-pressed="false">Years</button>
+            </div>
+          </div>
+          <div class="money-input suffix-input"><input type="number" inputmode="decimal" id="loanTerm" value="60" min="1" max="120" step="1"><span id="loanTermSuffix">months</span></div>
         </div>
       </div>
       <p class="rate-note" id="rateNote">Current and future-year vehicles start at 8.5%. You can edit the rate to match your bank’s offer.</p>
