@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="The Financing Blueprint car loan calculator is coming soon.">
-<title>Car Loan Calculator — Coming Soon</title>
+<meta name="description" content="Estimate a car loan payment using the vehicle year, price, down payment, bank rate, and loan term.">
+<title>Car Loan Calculator — Financing Blueprint</title>
 <link rel="stylesheet" href="styles.css">
 </head>
-<body class="coming-soon-page">
+<body class="car-loan-page">
   <header class="site-header">
     <a class="home-button" href="index.html" aria-label="Go to homepage"><span aria-hidden="true">⌂</span> Home</a>
     <div class="site-menu">
@@ -21,15 +21,64 @@
       </nav>
     </div>
   </header>
-<main class="coming-soon-shell">
-  <section class="coming-soon-card">
-    <span class="coming-icon" aria-hidden="true">◇</span>
+<main class="car-calculator-shell">
+  <header class="calculator-heading">
     <p class="eyebrow">Vehicle financing</p>
     <h1>Car loan calculator</h1>
-    <p>We’re building a straightforward way to estimate your vehicle deposit, loan payment, and total financing cost.</p>
-    <span class="coming-badge">Coming soon</span>
-  </section>
+    <p class="sub">Enter the vehicle details and your bank’s terms to estimate the financed amount, monthly payment, and total interest.</p>
+  </header>
+
+  <div class="car-calculator-grid">
+    <section class="panel car-input-panel" aria-labelledby="vehicleDetailsHeading">
+      <div class="section-heading">
+        <p class="eyebrow" id="vehicleDetailsHeading">Vehicle and loan details</p>
+        <span class="year-rule" id="yearRule">Rate based on vehicle year</span>
+      </div>
+
+      <div class="car-fields-grid">
+        <div class="top-field">
+          <label for="vehicleYear">Vehicle year</label>
+          <select class="select-input" id="vehicleYear"></select>
+        </div>
+
+        <div class="top-field">
+          <label for="interestRate">Annual interest rate</label>
+          <div class="money-input suffix-input"><input type="number" inputmode="decimal" id="interestRate" value="8.5" min="0" step="0.01"><span>%</span></div>
+        </div>
+
+        <div class="top-field">
+          <label for="carPrice">Car price</label>
+          <div class="money-input"><span>J$</span><input type="text" inputmode="decimal" data-car-currency id="carPrice" value="5,000,000"></div>
+        </div>
+
+        <div class="top-field">
+          <label for="downPayment">Down payment</label>
+          <div class="money-input"><span>J$</span><input type="text" inputmode="decimal" data-car-currency id="downPayment" value="500,000"></div>
+        </div>
+
+        <div class="top-field car-term-field">
+          <label for="loanMonths">Length of loan</label>
+          <div class="money-input suffix-input"><input type="number" inputmode="numeric" id="loanMonths" value="60" min="1" max="120" step="1"><span>months</span></div>
+        </div>
+      </div>
+      <p class="rate-note" id="rateNote">Current and future-year vehicles start at 8.5%. You can edit the rate to match your bank’s offer.</p>
+    </section>
+
+    <aside class="panel car-results-panel" aria-live="polite">
+      <p class="eyebrow">Estimated payment</p>
+      <p class="car-monthly"><span>J$</span><strong id="carMonthlyPayment">0.00</strong><small>/ month</small></p>
+      <div class="car-result-list">
+        <div><span>Amount financed</span><strong id="amountFinanced">J$0.00</strong></div>
+        <div><span>Total loan payments</span><strong id="totalLoanPayments">J$0.00</strong></div>
+        <div><span>Total interest</span><strong id="totalInterest">J$0.00</strong></div>
+      </div>
+      <p class="car-status" id="carStatus">Enter your loan details to see an estimate.</p>
+    </aside>
+  </div>
+
+  <p class="footnote">This estimate assumes a fixed-rate amortizing loan with equal monthly payments. Bank fees, insurance, taxes, and other charges are not included.</p>
 </main>
 <script src="navigation.js"></script>
+<script src="car-loan.js"></script>
 </body>
 </html>

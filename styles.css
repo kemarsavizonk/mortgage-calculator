@@ -484,6 +484,37 @@
     text-transform:uppercase;
   }
 
+  /* ---- car loan calculator ---- */
+  .car-calculator-shell{ width:min(1060px, 100%); margin:0 auto; }
+  .calculator-heading{ max-width:680px; margin-bottom:28px; }
+  .car-calculator-grid{ display:grid; grid-template-columns:minmax(0, 1.65fr) minmax(280px, 0.85fr); gap:18px; align-items:start; }
+  .car-input-panel{ padding:26px; }
+  .section-heading{ display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:22px; }
+  .section-heading .eyebrow{ margin:0; }
+  .year-rule{
+    color:var(--bank);
+    font:500 10px 'IBM Plex Mono', monospace;
+    text-align:right;
+  }
+  .car-fields-grid{ display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:18px 16px; }
+  .car-term-field{ grid-column:1 / -1; max-width:calc(50% - 8px); }
+  .suffix-input input{ text-align:right; }
+  .suffix-input span{ margin:0 0 0 6px; }
+  .rate-note{ margin:20px 0 0; color:var(--muted-2); font-size:11.5px; line-height:1.55; }
+
+  .car-results-panel{ position:sticky; top:20px; padding:26px; border-top:3px solid var(--bank); }
+  .car-monthly{ margin:14px 0 28px; }
+  .car-monthly > span{ color:var(--muted-2); font:500 14px 'IBM Plex Mono', monospace; }
+  .car-monthly strong{ display:block; margin:3px 0; color:var(--text); font:700 clamp(32px, 4vw, 46px) 'Fraunces', serif; overflow-wrap:anywhere; }
+  .car-monthly small{ color:var(--muted); font:500 11px 'IBM Plex Mono', monospace; }
+  .car-result-list{ display:flex; flex-direction:column; border-top:1px solid var(--panel-border); }
+  .car-result-list > div{ display:flex; justify-content:space-between; gap:16px; padding:13px 0; border-bottom:1px solid var(--panel-border); }
+  .car-result-list span{ color:var(--muted); font-size:11.5px; }
+  .car-result-list strong{ color:var(--text); font:600 11.5px 'IBM Plex Mono', monospace; text-align:right; }
+  .car-status{ margin:18px 0 0; padding:10px 11px; border-radius:8px; font:500 10.5px/1.5 'IBM Plex Mono', monospace; }
+  .car-status.ready{ color:var(--ok); background:rgba(85,180,138,0.1); }
+  .car-status.warning{ color:var(--danger); background:rgba(225,122,107,0.1); }
+
   /* ---- responsive layout ---- */
   @media (max-width: 760px){
     body{ padding:24px 14px 44px; }
@@ -493,6 +524,8 @@
     .total-left, .stack-bar{ flex-basis:100%; min-width:0; }
     .tool-grid{ grid-template-columns:1fr; }
     .home-page, .coming-soon-page{ align-items:flex-start; }
+    .car-calculator-grid{ grid-template-columns:1fr; }
+    .car-results-panel{ position:static; }
   }
 
   @media (max-width: 560px){
@@ -539,6 +572,12 @@
     .home-intro{ font-size:15px; }
     .tool-card{ min-height:320px; padding:20px; }
     .coming-soon-card{ padding:32px 20px; }
+    .calculator-heading{ margin-bottom:22px; }
+    .car-input-panel, .car-results-panel{ padding:18px; }
+    .section-heading{ align-items:flex-start; flex-direction:column; gap:7px; }
+    .year-rule{ text-align:left; }
+    .car-fields-grid{ grid-template-columns:1fr; gap:14px; }
+    .car-term-field{ grid-column:auto; max-width:none; }
   }
 
   @media (max-width: 360px){
